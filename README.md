@@ -1,6 +1,6 @@
 ![](http://i.imgur.com/nFFVOkM.png)
 
-React demos from thenewboston tutorials.
+React snippets and examples from thenewboston tutorials.
 
 ### Links
 

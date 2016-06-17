@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Setting Properties</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script type="text/babel">
+
+        // We can reuse properties across multiple elements in our component
+        var BuckysComponent = React.createClass({
+            getDefaultProps: function () {
+                return {
+                    backgroundColor: "blue",
+                    height: 200,
+                    width: 200
+                }
+            },
+            render: function() {
+                return (
+                        <div>
+                            <div style={this.props}></div>
+                            <button style={this.props}>Hey now</button>
+                        </div>
+                );
+            }
+        });
+
+        ReactDOM.render(<BuckysComponent />, document.getElementById('container'));
+
+    </script>
+
+</body>
+</html>
