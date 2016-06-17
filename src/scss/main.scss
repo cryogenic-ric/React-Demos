@@ -2,6 +2,12 @@
 @import "grid";
 @import "themes/default/master";
 
+.board{
+	background-color: #b9def0;
+	height: 100%;
+	padding: 8px;
+}
+
 .commentContainer {
 	background: #eee;
 	border: 1px solid #ccc;
