@@ -4,18 +4,42 @@
     <meta charset="UTF-8">
     <title>Event Handling</title>
     <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
 </head>
 <body>
 
     <div id="container"></div>
 
     <script type="text/babel">
-        var Bacon = React.createClass({
+
+        // we can create custom functions and call them with the onClick event
+        var Comment = React.createClass({
+            edit: function() {
+                console.log('Editing comment');
+            },
+            remove: function() {
+                console.log('Removing comment');
+            },
             render: function() {
-                return (<h2>This is a simple component</h2>);
+                return (<div className="commentContainer">
+                            <div className="comment">{this.props.children}</div>
+                            <button onClick={this.edit} className="button-primary">Edit</button>
+                            <button onClick={this.remove} className="button-danger">Remove</button>
+                        </div>
+                );
             }
         });
-        ReactDOM.render(<Bacon />, document.getElementById('container'));
+
+        // we can reference the content in between tags using 'this.props.children'
+        ReactDOM.render(
+                <div>
+                    <Comment>Hey, this is Bucky</Comment>
+                    <Comment>Ok here is another comment</Comment>
+                    <Comment>I like to watch movies and cry</Comment>
+                </div>, document.getElementById('container'));
+
     </script>
 
 </body>

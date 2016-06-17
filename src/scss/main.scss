@@ -1,3 +1,21 @@
-body {
-	background-color: blue;
+@import "normalize";
+@import "grid";
+@import "themes/default/master";
+
+.commentContainer {
+	background: #eee;
+	border: 1px solid #ccc;
+	display: inline-block;
+	margin: 8px;
+	padding: 10px;
+
+	.comment {
+		font-size: 1.1em;
+		font-weight: 500;
+		margin-bottom: 10px;
+	}
+
+	button {
+		margin-right: 4px;
+	}
 }
