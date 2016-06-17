@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>React</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
     <script src="../../js/react.min.js"></script>
     <script src="../../js/react-dom.min.js"></script>
     <script src="../../js/browser.min.js"></script>
@@ -13,7 +14,8 @@
     <div id="container"></div>
 
     <script type="text/babel">
-        var UserGist = React.createClass({
+
+        var UserInfo = React.createClass({
             getInitialState: function() {
                 return {
                     name: '',
@@ -24,8 +26,7 @@
                 this.serverRequest = $.get(this.props.source, function (result) {
                     var data = JSON.parse(result);
                     var firstResult = data[0];
-                    console.log(firstResult);
-                    console.log(firstResult.email);
+                    console.log(firstResult, firstResult.name, firstResult.email);
                     this.setState({
                         name: firstResult.name,
                         email: firstResult.email
@@ -41,9 +42,10 @@
         });
 
         ReactDOM.render(
-                <UserGist source="https://raw.githubusercontent.com/buckyroberts/Source-Code-from-Tutorials/master/Other/SampleJsonData/fake_bank_data.json" />,
-                document.body
+                <UserInfo source="https://raw.githubusercontent.com/buckyroberts/Source-Code-from-Tutorials/master/Other/SampleJsonData/fake_bank_data.json" />,
+                document.getElementById('container')
         );
+
     </script>
 
 </body>
