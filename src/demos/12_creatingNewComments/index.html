@@ -10,113 +10,113 @@
 </head>
 <body>
 
-<div id="container"></div>
+    <div id="container"></div>
 
-<script type="text/babel">
+    <script type="text/babel">
 
-    var Comment = React.createClass({
-        getInitialState: function () {
-            return {editing: false}
-        },
-        edit: function() {
-            console.log('Editing comment');
-            this.setState({editing: true});
-        },
-        remove: function() {
-            this.props.onRemove(this.props.index);
-        },
-        save: function() {
-            var val = this.refs.newText.value;
-            console.log('Saving comment: ' + val);
-            this.props.onChange(val, this.props.index);
-            this.setState({editing: false});
-        },
-        renderDisplay: function() {
-            return (<div className="commentContainer">
-                        <div className="comment">{this.props.children}</div>
-                        <button onClick={this.edit} className="button-primary">Edit</button>
-                        <button onClick={this.remove} className="button-danger">Remove</button>
-                    </div>
-            );
-        },
-        renderForm: function() {
-            return (<div className="commentContainer">
-                        <textarea ref="newText" defaultValue={this.props.children}></textarea>
-                        <button onClick={this.save} className="button-success">Save</button>
-                    </div>
-            );
-        },
-        render: function() {
-            if(this.state.editing){
-                return this.renderForm();
-            }else{
-                return this.renderDisplay();
-            }
-        }
-    });
-
-    var Board = React.createClass({
-        propTypes: {
-            count: function (props, propName) {
-                if(typeof props[propName] != "number"){
-                    return new Error('Error, count must be a number!');
-                }
-                if(typeof props[propName] > 100){
-                    return new Error('Error, you can not have 100 comments hoss!');
-                }
-            }
-        },
-        getInitialState: function () {
-            return {
-                comments: []
-            };
-        },
-
-        // Add a new comment
-        add: function (text) {
-            console.log('Creating new comment');
-            var arr = this.state.comments;
-            arr.push(text);
-            this.setState({comments:arr});
-        },
-
-        eachComment: function (comment, i) {
-            return (
-                    <Comment key={i} index={i} onChange={this.update} onRemove={this.remove}>
-                        {comment}
-                    </Comment>
-            );
-        },
-        remove: function(i) {
-            console.log('Removing comment: ' + i);
-            var arr = this.state.comments;
-            arr.splice(i, 1);
-            this.setState({comments:arr});
-        },
-        update: function(newText, i) {
-            console.log('Updating comment');
-            var arr = this.state.comments;
-            arr[i] = newText;
-            this.setState({comments:arr});
-        },
-
-        // pass in values with bind()
-        render: function() {
-            return (
-                    <div>
-                        <button onClick={this.add.bind(null, 'New comment')} className="button-info create">Add New</button>
-                        <div className="board">
-                            {this.state.comments.map(this.eachComment)}
+        var Comment = React.createClass({
+            getInitialState: function () {
+                return {editing: false}
+            },
+            edit: function() {
+                console.log('Editing comment');
+                this.setState({editing: true});
+            },
+            remove: function() {
+                this.props.onRemove(this.props.index);
+            },
+            save: function() {
+                var val = this.refs.newText.value;
+                console.log('Saving comment: ' + val);
+                this.props.onChange(val, this.props.index);
+                this.setState({editing: false});
+            },
+            renderDisplay: function() {
+                return (<div className="commentContainer">
+                            <div className="comment">{this.props.children}</div>
+                            <button onClick={this.edit} className="button-primary">Edit</button>
+                            <button onClick={this.remove} className="button-danger">Remove</button>
                         </div>
-                    </div>
-            );
-        }
+                );
+            },
+            renderForm: function() {
+                return (<div className="commentContainer">
+                            <textarea ref="newText" defaultValue={this.props.children}></textarea>
+                            <button onClick={this.save} className="button-success">Save</button>
+                        </div>
+                );
+            },
+            render: function() {
+                if(this.state.editing){
+                    return this.renderForm();
+                }else{
+                    return this.renderDisplay();
+                }
+            }
+        });
 
-    });
+        var Board = React.createClass({
+            propTypes: {
+                count: function (props, propName) {
+                    if(typeof props[propName] != "number"){
+                        return new Error('Error, count must be a number!');
+                    }
+                    if(typeof props[propName] > 100){
+                        return new Error('Error, you can not have 100 comments hoss!');
+                    }
+                }
+            },
+            getInitialState: function () {
+                return {
+                    comments: []
+                };
+            },
 
-    ReactDOM.render(<Board count={10} />, document.getElementById('container'));
+            // Add a new comment
+            add: function (text) {
+                console.log('Creating new comment');
+                var arr = this.state.comments;
+                arr.push(text);
+                this.setState({comments:arr});
+            },
 
-</script>
+            eachComment: function (comment, i) {
+                return (
+                        <Comment key={i} index={i} onChange={this.update} onRemove={this.remove}>
+                            {comment}
+                        </Comment>
+                );
+            },
+            remove: function(i) {
+                console.log('Removing comment: ' + i);
+                var arr = this.state.comments;
+                arr.splice(i, 1);
+                this.setState({comments:arr});
+            },
+            update: function(newText, i) {
+                console.log('Updating comment');
+                var arr = this.state.comments;
+                arr[i] = newText;
+                this.setState({comments:arr});
+            },
+
+            // pass in values with bind()
+            render: function() {
+                return (
+                        <div>
+                            <button onClick={this.add.bind(null, 'New comment')} className="button-info create">Add New</button>
+                            <div className="board">
+                                {this.state.comments.map(this.eachComment)}
+                            </div>
+                        </div>
+                );
+            }
+
+        });
+
+        ReactDOM.render(<Board count={10} />, document.getElementById('container'));
+
+    </script>
 
 </body>
 </html>
