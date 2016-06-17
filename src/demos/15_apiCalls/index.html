@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>React</title>
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script type="text/babel">
+        var UserGist = React.createClass({
+            getInitialState: function() {
+                return {
+                    name: '',
+                    email: ''
+                };
+            },
+            componentDidMount: function() {
+                this.serverRequest = $.get(this.props.source, function (result) {
+                    var data = JSON.parse(result);
+                    var firstResult = data[0];
+                    console.log(firstResult);
+                    console.log(firstResult.email);
+                    this.setState({
+                        name: firstResult.name,
+                        email: firstResult.email
+                    });
+                }.bind(this));
+            },
+            componentWillUnmount: function() {
+                this.serverRequest.abort();
+            },
+            render: function() {
+                return (<div>{this.state.name}'s email is {this.state.email}</div>);
+            }
+        });
+
+        ReactDOM.render(
+                <UserGist source="https://raw.githubusercontent.com/buckyroberts/Source-Code-from-Tutorials/master/Other/SampleJsonData/fake_bank_data.json" />,
+                document.body
+        );
+    </script>
+
+</body>
+</html>
