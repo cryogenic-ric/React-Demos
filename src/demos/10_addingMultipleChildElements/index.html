@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding Multiple Child Elements</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script type="text/babel">
+
+        var Comment = React.createClass({
+
+            getInitialState: function () {
+                return {editing: false}
+            },
+            edit: function() {
+                console.log('Editing comment');
+                this.setState({editing: true});
+            },
+            remove: function() {
+                console.log('Removing comment');
+            },
+            save: function() {
+                var val = this.refs.newText.value;
+                console.log('Saving comment: ' + val);
+                this.setState({editing: false});
+            },
+            renderDisplay: function() {
+                return (<div className="commentContainer">
+                            <div className="comment">{this.props.children}</div>
+                            <button onClick={this.edit} className="button-primary">Edit</button>
+                            <button onClick={this.remove} className="button-danger">Remove</button>
+                        </div>
+                );
+            },
+            renderForm: function() {
+                return (<div className="commentContainer">
+                            <textarea ref="newText" defaultValue={this.props.children}></textarea>
+                            <button onClick={this.save} className="button-success">Save</button>
+                        </div>
+                );
+            },
+            render: function() {
+                if(this.state.editing){
+                    return this.renderForm();
+                }else{
+                    return this.renderDisplay();
+                }
+            }
+        });
+
+        var Board = React.createClass({
+            propTypes: {
+                count: function (props, propName) {
+                    if(typeof props[propName] != "number"){
+                        return new Error('Error, count must be a number!');
+                    }
+                    if(typeof props[propName] > 100){
+                        return new Error('Error, you can not have ' + props[propName] + ' comments hoss!');
+                    }
+                }
+            },
+
+            // returns an array of comments
+            getInitialState: function () {
+                return {
+                    comments: [
+                            'I like bacon',
+                            'This is another comment',
+                            'Want to get ice cream?',
+                            'Ok, now we have enough comments'
+                    ]
+                };
+            },
+
+            // map() creates a new array by calling a function on every element in the array
+            render: function() {
+                return (
+                        <div className="board">
+
+                            /* return a comment for every item in your array */
+                            {this.state.comments.map(function (note, i) {
+                                return (<Comment key={i}>{note}</Comment>);
+                            })}
+
+                        </div>
+                );
+            }
+
+        });
+
+        ReactDOM.render(<Board count={10} />, document.getElementById('container'));
+
+    </script>
+
+</body>
+</html>
