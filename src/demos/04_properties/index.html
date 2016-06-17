@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Properties</title>
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+</head>
+<body>
+
+    <div id="container"></div>
+
+    <script type="text/babel">
+
+        // properties can be accessed by using 'this.props'
+        var BuckysComponent = React.createClass({
+            render: function() {
+                return (
+                    <div>
+                        <h2>{this.props.movie}</h2>
+                        <h3>{this.props.genre}</h3>
+                        <br/>
+                    </div>
+                );
+            }
+        });
+
+        // passing data to component is similar to adding properties to HTML
+        ReactDOM.render(
+                <div>
+                    <BuckysComponent movie="Avatar" genre="action" />
+                    <BuckysComponent movie="The Notebook" genre="romance" />
+                    <BuckysComponent movie="Captain America" genre="action" />
+                </div>,
+                document.getElementById('container'));
+
+    </script>
+
+</body>
+</html>
