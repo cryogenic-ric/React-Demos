@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mounting Components</title>
+    <link rel="stylesheet" type="text/css" href="../../css/main.css">
+    <script src="../../js/react.min.js"></script>
+    <script src="../../js/react-dom.min.js"></script>
+    <script src="../../js/browser.min.js"></script>
+</head>
+<body>
+
+    <script type="text/babel">
+
+        var BuckysComponent = React.createClass({
+            componentWillMount: function () {
+                alert('Component will mount');
+            },
+            componentDidMount: function () {
+                console.log('Component did mount');
+            },
+            render: function() {
+                return (<button className="button-secondary">Buckys Component</button>);
+            }
+        });
+
+        ReactDOM.render(<BuckysComponent />, document.body);
+
+        var blueButton = document.getElementsByTagName('button')[0];
+        blueButton.onclick = function () {
+            ReactDOM.unmountComponentAtNode(document.body);
+            console.log('Component is unmounted');
+        }
+
+    </script>
+
+</body>
+</html>
