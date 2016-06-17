@@ -27,13 +27,13 @@
                 console.log('Removing comment');
             },
 
-            // save the new comment
+            // store value of textarea in variable
             save: function() {
-                console.log('Saving comment');
+                var val = this.refs.newText.value;
+                console.log('Saving comment: ' + val);
                 this.setState({editing: false});
             },
 
-            // display the comment
             renderDisplay: function() {
                 return (<div className="commentContainer">
                             <div className="comment">{this.props.children}</div>
@@ -43,16 +43,15 @@
                 );
             },
 
-            // form to edit comment
+            // you can use refs to invoke methods on component instances
             renderForm: function() {
                 return (<div className="commentContainer">
-                            <textarea defaultValue={this.props.children}></textarea>
+                            <textarea ref="newText" defaultValue={this.props.children}></textarea>
                             <button onClick={this.save} className="button-success">Save</button>
                         </div>
                 );
             },
 
-            // choose whether to display editing form or comment
             render: function() {
                 if(this.state.editing){
                     return this.renderForm();
