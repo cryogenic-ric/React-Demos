@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Adding Multiple Child Elements</title>
+    <title>Editing and Removing Comments</title>
     <link rel="stylesheet" type="text/css" href="../../css/main.css">
     <script src="../../js/react.min.js"></script>
     <script src="../../js/react-dom.min.js"></script>
@@ -15,7 +15,6 @@
     <script type="text/babel">
 
         var Comment = React.createClass({
-
             getInitialState: function () {
                 return {editing: false}
             },
@@ -24,11 +23,12 @@
                 this.setState({editing: true});
             },
             remove: function() {
-                console.log('Removing comment');
+                this.props.onRemove(this.props.index);
             },
             save: function() {
                 var val = this.refs.newText.value;
                 console.log('Saving comment: ' + val);
+                this.props.onChange(val, this.props.index);
                 this.setState({editing: false});
             },
             renderDisplay: function() {
@@ -66,28 +66,46 @@
                     }
                 }
             },
-
-            // returns an array of comments
             getInitialState: function () {
                 return {
                     comments: [
-                            'I like bacon',
-                            'This is another comment',
-                            'Want to get ice cream?',
-                            'Ok, now we have enough comments'
+                        'I like bacon',
+                        'This is another comment',
+                        'Want to get ice cream?',
+                        'Ok, now we have enough comments'
                     ]
                 };
             },
+            
+            // return each comment
+            eachComment: function (comment, i) {
+                return (
+                        <Comment key={i} index={i} onChange={this.update} onRemove={this.remove}>
+                            {comment}
+                        </Comment>
+                );
+            },
 
-            // map() creates a new array by calling a function on every element in the array
+            // splice() will remove one item in the array
+            remove: function(i) {
+                console.log('Removing comment: ' + i);
+                var arr = this.state.comments;
+                arr.splice(i, 1);
+                this.setState({comments:arr});
+            },
+
+            // update the state of the comments
+            update: function(newText, i) {
+                console.log('Updating comment');
+                var arr = this.state.comments;
+                arr[i] = newText;
+                this.setState({comments:arr});
+            },
+
             render: function() {
                 return (
                         <div className="board">
-
-                            {this.state.comments.map(function (note, i) {
-                                return (<Comment key={i}>{note}</Comment>);
-                            })}
-
+                            {this.state.comments.map(this.eachComment)}
                         </div>
                 );
             }
